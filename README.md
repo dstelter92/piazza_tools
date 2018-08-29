@@ -5,8 +5,7 @@ HEAVILY relies on [piazza-api](https://github.com/hfaran/piazza-api) for all
 connections and calls to piazza
 
 #
-### details
-tools/
+### tools/
 --> get_polls-api.py
 
 usage: python2 get_polls-api.py class_id yes-grading
