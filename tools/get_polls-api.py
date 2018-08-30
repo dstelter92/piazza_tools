@@ -1,43 +1,36 @@
 #!/usr/bin/python2
 
-import sys, os, io, urllib
+import sys, argparse
 import getpass
-from numpy import *
 from piazza_api import Piazza
-from bs4 import BeautifulSoup
 
 DEBUG = 0
 
-## DEFAULTS
-grading = ''
-classid = ''
+## Command line args
+parser = argparse.ArgumentParser(description='Get polls from piazza class'
+    ', grade according to correct answer specified (explanation) in poll'
+    ' or via participation.')
+parser.add_argument('-c', '--classid', metavar='classID', type=str, nargs='?',
+        help='Piazza classID from URL')
+parser.add_argument('-g', '--grading', metavar='grading', type=str, nargs='?',
+        help='Should grading be performed? (yes/no)', default='no')
+parser.add_argument('-e', '--email', metavar='email', type=str, nargs='?',
+        help='Piazza email to login with')
 
-if (len(sys.argv) == 1):
-    pass
-elif (len(sys.argv) == 2):
-    classid = sys.argv[1]
-elif (len(sys.argv) == 3):
-    classid = sys.argv[1]
-    grading = sys.argv[2]
-else:
-    print 'Invalid input'
-    print 'example:'
-    print '  python2 get_polls-api.py yes-grading'
-    print ''
-    sys.exit()
+args = parser.parse_args()
+grading = args.grading
+classid = args.classid
+email = args.email
 
 ## Grade poll based on answer or just check for completion? (yes=1, no=0)
 if (grading == ''):
     GRADE_POLL = 0 # DEFAULT
-elif (grading == 'no-grading'):
+elif (grading == 'no'):
     GRADE_POLL = 0
-elif (grading == 'yes-grading'):
+elif (grading == 'yes'):
     GRADE_POLL = 1
 else:
     print 'Invalid grading option'
-    print 'usage:'
-    print '  yes-grading OR no-grading'
-    print ''
     sys.exit()
 
 if (GRADE_POLL):
@@ -49,7 +42,7 @@ print 'Connecting to Piazza via piazza-api...'
 
 # Piazza setup
 p = Piazza()
-p.user_login(email=None,password=None)
+p.user_login(email=email,password=None)
 me = p.get_user_profile()
 pclass = p.network(classid)
 print '  Logged in as:', me.get('name')
@@ -78,12 +71,13 @@ for user in users:
 print 'Found',len(students),'students'
 print ''
 
-# Get all poll posts
-if (GRADE_POLL):
-    print 'Searching all posts for completed polls to grade based on correctness...'
-else:
-    print 'Searching all posts for completed polls to grade based on participation...'
+
+# Get poll posts
 posts = pclass.iter_all_posts()
+if (GRADE_POLL):
+    print 'Searching posts for completed polls to grade based on correctness...'
+else:
+    print 'Searching posts for completed polls to grade based on participation...'
 npoll = 0
 nvotes = 0
 for post in posts:
@@ -170,6 +164,12 @@ for post in posts:
 print 'Found',npoll,'total polls with',nvotes,'total votes'
 print ''
 
+# Average all poll columns
+for s in students:
+    poll_grades = s[3::]
+    total_grade = sum(poll_grades)
+    s.append(total_grade)
+
 # Output file
 f = open(fname,'w')
 
@@ -177,13 +177,13 @@ f = open(fname,'w')
 f.write('name,email,piazza_id,')
 for i in range(npoll):
     f.write('poll_%s,' % str(i+1))
-f.write('\n')
+f.write('total\n')
 
 # write students list to file
 for s in students:
-    for i in s:
-        f.write('%s,' % i)
-    f.write('\n')
+    for i in range(npoll+3):
+        f.write('%s,' % s[i])
+    f.write('%d\n' % s[-1])
 print 'Data written to:',fname
 f.close()
 
