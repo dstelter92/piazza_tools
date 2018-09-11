@@ -34,9 +34,9 @@ else:
     sys.exit()
 
 if (GRADE_POLL):
-    fname = 'graded_polls-%s.csv' % classid
+    fname = 'polls_graded-%s.csv' % classid
 else:
-    fname = 'participation_polls-%s.csv' % classid
+    fname = 'polls_participation-%s.csv' % classid
 
 print 'Connecting to Piazza via piazza-api...'
 

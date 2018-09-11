@@ -27,7 +27,7 @@ email = args.email
 query = ' '.join(args.query)
 skip = args.skip
 
-fname = 'participation_%s-%s.csv' % (query,classid)
+fname = 'querry-%s_participation-%s.csv' % (query,classid)
 
 print 'Connecting to Piazza via piazza-api...'
 
