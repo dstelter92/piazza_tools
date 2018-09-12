@@ -6,7 +6,7 @@ from piazza_api import Piazza
 
 DEBUG = 0
 
-### Checks all posts that match querry for participation. Counts which students
+### Checks all posts that match query for participation. Counts which students
 ### have responded for each post.
 
 ## Command line args
@@ -27,7 +27,7 @@ email = args.email
 query = ' '.join(args.query)
 skip = args.skip
 
-fname = 'querry-%s_participation-%s.csv' % (query,classid)
+fname = 'query-%s_participation-%s.csv' % (query,classid)
 
 print 'Connecting to Piazza via piazza-api...'
 
@@ -68,6 +68,7 @@ print ''
 # Get poll posts
 posts = pclass.search_feed(query)
 print 'Searching posts containing "',query,'" for completed polls to grade based on correctness...'
+post_names = []
 nposts = 0
 tviews = 0
 for post in posts:
@@ -86,6 +87,7 @@ for post in posts:
 
     print '--> Poll cid=',post_cid,' title:',subject
     people = this_post.get('change_log')
+    post_names.append(subject)
 
     piazzaids = []
     for response in people:
@@ -133,7 +135,7 @@ f = open(fname,'w')
 # Write header
 f.write('name,email,piazza_id,')
 for i in range(nposts):
-    f.write('post_%s,' % str(i+1))
+    f.write('%s,' % post_names[i])
 f.write('total\n')
 
 # write students list to file
