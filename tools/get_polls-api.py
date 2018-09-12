@@ -78,6 +78,7 @@ if (GRADE_POLL):
     print 'Searching posts for completed polls to grade based on correctness...'
 else:
     print 'Searching posts for completed polls to grade based on participation...'
+poll_names = []
 npoll = 0
 nvotes = 0
 for post in posts:
@@ -112,6 +113,8 @@ for post in posts:
     if (votes == 0):
         print 'WARNING: Poll cid=',post_cid,'has no votes, skipping...'
         continue
+
+    poll_names.append(post_title)
 
     if (GRADE_POLL):
         # Check answer, match to poll integer
@@ -176,7 +179,7 @@ f = open(fname,'w')
 # Write header
 f.write('name,email,piazza_id,')
 for i in range(npoll):
-    f.write('poll_%s,' % str(i+1))
+    f.write('%s,' % poll_names[i])
 f.write('total\n')
 
 # write students list to file
