@@ -16,7 +16,7 @@ parser.add_argument('-e', '--email', metavar='email', type=str, nargs='?',
         help='Piazza email to login with')
 parser.add_argument('-t', '--title', metavar='title', type=str, nargs='*',
         help='Title of post, gets appended with discussion section')
-parser.add_argument('-n', '--nsects', metavar='nsects', type=int,
+parser.add_argument('-n', '--ngroups', metavar='ngroups', type=int,
         help='Number of discussion sections')
 parser.add_argument('-s', '--status', metavar='status', type=str, nargs='?',
         help='Activity of posts (active, private)')
@@ -26,7 +26,7 @@ args = parser.parse_args()
 classid = args.classid
 email = args.email
 title = ' '.join(args.title)
-nsects = args.nsects
+nsects = args.ngroups
 active = args.status
 
 content = "What chemistry topics were new to you this past week? What was"\
