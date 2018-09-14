@@ -32,8 +32,6 @@ nsects = args.ngroups
 active = args.status
 groupname = args.groupname
 
-discussion
-
 content = "What chemistry topics were new to you this past week? What was"\
         "confusing?\n\n Many students have the same confusions, so take a "\
         "look at what your peers have answered. See something you understand"\
