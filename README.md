@@ -26,5 +26,15 @@ response to them. Participation grades are then tabulated and written to a csv
 file.
 
 
+--> post_reflections-api.py
+
+usage: python2 querry_posts-api.py -c classid -e login_email -t title -n nsects
+-s status
+
+posts a 'reflections' thread for for nsects groups on piazza. Somewhat
+specialized for my usage, but a good example on how to create an instructor post
+and assign it to a group with pre-set content.
+
+
 ### other
 No docs yet, maybe someday.
