@@ -5,14 +5,11 @@ import getpass
 from piazza_api import Piazza
 import piazza_api.exceptions
 
-DEBUG = 0
-
-### Checks all posts that match query for participation. Counts which students
-### have responded for each post.
+### Posts a reflection thread for each group on piazza
 
 ## Command line args
-parser = argparse.ArgumentParser(description='Search for posts and find'
-        ' students that participated on that group of posts')
+parser = argparse.ArgumentParser(description='Post reflections thread'
+        ' for each nsect groups in piazza')
 parser.add_argument('-c', '--classid', metavar='classID', type=str, nargs='?',
         help='Piazza classID from URL')
 parser.add_argument('-e', '--email', metavar='email', type=str, nargs='?',
