@@ -20,6 +20,8 @@ parser.add_argument('-n', '--ngroups', metavar='ngroups', type=int,
         help='Number of discussion sections')
 parser.add_argument('-s', '--status', metavar='status', type=str, nargs='?',
         help='Activity of posts (active, private)')
+parser.add_argument('-d', '--groupname', metavar='groupname', type=str, nargs='?',
+        help='Basename of each group')
 
 
 args = parser.parse_args()
@@ -28,6 +30,9 @@ email = args.email
 title = ' '.join(args.title)
 nsects = args.ngroups
 active = args.status
+groupname = args.groupname
+
+discussion
 
 content = "What chemistry topics were new to you this past week? What was"\
         "confusing?\n\n Many students have the same confusions, so take a "\
@@ -47,8 +52,8 @@ print '  Logged in as:', me.get('name')
 print ''
 
 for i in range(nsects):
-    disc = 'B ' + str(i+1)
-    thistitle = '{} B{}'.format(title, i+1)
+    disc = groupname + ' ' + str(i+1)
+    thistitle = '{} {}{}'.format(title,groupname,i+1)
     params = {
         'status': active,
         'type': 'note',
