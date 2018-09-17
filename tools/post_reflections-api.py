@@ -20,7 +20,7 @@ parser.add_argument('-n', '--ngroups', metavar='ngroups', type=int,
         help='Number of discussion sections')
 parser.add_argument('-s', '--status', metavar='status', type=str, nargs='?',
         help='Activity of posts (active, private)')
-parser.add_argument('-d', '--groupname', metavar='groupname', type=str, nargs='?',
+parser.add_argument('-g', '--groupname', metavar='groupname', type=str, nargs='?',
         help='Basename of each group')
 
 
@@ -66,7 +66,7 @@ for i in range(nsects):
         print 'Could not post, ignoring'
         continue
     finally:
-        time.sleep(5)
+        time.sleep(5) # don't overload piazza servers
 
     print 'Added post with title:',thistitle
 
