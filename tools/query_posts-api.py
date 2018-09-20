@@ -16,7 +16,7 @@ parser.add_argument('-c', '--classid', metavar='classID', type=str, nargs='?',
         help='Piazza classID from URL')
 parser.add_argument('-e', '--email', metavar='email', type=str, nargs='?',
         help='Piazza email to login with')
-parser.add_argument('-q', '--query', metavar='quary', type=str, nargs='*',
+parser.add_argument('-q', '--query', metavar='query', type=str, nargs='*',
         help='Search query')
 parser.add_argument('-s', '--skip', metavar='skip', type=str, nargs='*',
         help='Skip post type (question / poll / note)')
