@@ -62,6 +62,7 @@ for i in range(nsects):
             'config': {'feed_groups': disc.lower() + '_' + classid}
         }
     else:
+        thistitle = title
         params = {
             'status': active,
             'type': 'note',
