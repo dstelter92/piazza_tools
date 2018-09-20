@@ -50,8 +50,8 @@ print '  Logged in as:', me.get('name')
 print ''
 
 for i in range(nsects):
-    thistitle = '{} {}{}'.format(title,groupname,i+1)
     if (groupname != ''):
+        thistitle = '{} {}{}'.format(title,groupname,i+1)
         disc = groupname + ' ' + str(i+1)
         params = {
             'status': active,
@@ -65,7 +65,7 @@ for i in range(nsects):
         params = {
             'status': active,
             'type': 'note',
-            'subject': thistitle,
+            'subject': title,
             'content': content,
         }
 
