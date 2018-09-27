@@ -30,7 +30,7 @@ elif (grading == 'no'):
 elif (grading == 'yes'):
     GRADE_POLL = 1
 else:
-    print 'Invalid grading option'
+    print('Invalid grading option')
     sys.exit()
 
 if (GRADE_POLL):
@@ -38,18 +38,18 @@ if (GRADE_POLL):
 else:
     fname = 'polls_participation-%s.csv' % classid
 
-print 'Connecting to Piazza via piazza-api...'
+print('Connecting to Piazza via piazza-api...')
 
 # Piazza setup
 p = Piazza()
 p.user_login(email=email,password=None)
 me = p.get_user_profile()
 pclass = p.network(classid)
-print '  Logged in as:', me.get('name')
-print ''
+print('  Logged in as: %s' % me.get('name'))
+print('')
 
 # Get user list of name, email and piazza_id
-print 'Finding all students in Piazza class:',classid
+print('Finding all students in Piazza class: %s' % classid)
 users = pclass.get_all_users()
 students = []
 for user in users:
@@ -62,22 +62,22 @@ for user in users:
     role = user.get('role')
     if role != 'student':
         ## Debug check to print Prof/TA info
-        print '--> IGNORE Prof/TA:',student_name,piazza_ID
+        print('--> IGNORE Prof/TA: %s uid: %s' % (student_name,piazza_ID))
         continue
 
     # Put data into list
     data = [student_name,student_email,piazza_ID]
     students.append(data)
-print 'Found',len(students),'students'
-print ''
+print('Found %d students' % len(students))
+print('')
 
 
 # Get poll posts
 posts = pclass.iter_all_posts()
 if (GRADE_POLL):
-    print 'Searching posts for completed polls to grade based on correctness...'
+    print('Searching posts for completed polls to grade based on correctness...')
 else:
-    print 'Searching posts for completed polls to grade based on participation...'
+    print('Searching posts for completed polls to grade based on participation...')
 poll_names = []
 npoll = 0
 nvotes = 0
@@ -106,12 +106,12 @@ for post in posts:
         for keys,var in post.items():
             print(str(keys),'=>',str(var))
 
-    print '--> Poll cid=',post_cid,' title:',post_title
+    print('--> Poll cid=%d title: %s' % (post_cid, post_title))
 
     # Skip if no answers... something went wrong.
     votes = int(poll_data.get('total_votes'))
     if (votes == 0):
-        print 'WARNING: Poll cid=',post_cid,'has no votes, skipping...'
+        print('WARNING: Poll cid=%s has no votes, skipping...' % post_cid)
         continue
 
     poll_names.append(post_title)
@@ -132,9 +132,9 @@ for post in posts:
         elif (answer == 'F' or answer == '6'):
             answer = 5
         else:
-            print 'WARNING: Poll cid=',post_cid,' has answer in an unsupported form.'
-            print '  Use alphanumeric or integer answers for grading,'
-            print '  6 answers MAX!! skipping...'
+            print('WARNING: Poll cid=%s has answer in an unsupported form.' %                  post_cid)
+            print('  Use alphanumeric or integer answers for grading,')
+            print('  6 answers MAX!! skipping...')
             continue
 
         # Grade poll, get ID for correct answers, then put in 'students' array
@@ -164,8 +164,8 @@ for post in posts:
     npoll = npoll + 1
     nvotes = nvotes + votes
 
-print 'Found',npoll,'total polls with',nvotes,'total votes'
-print ''
+print('Found %d total polls with %d total votes' % (npoll, nvotes))
+print('')
 
 # Average all poll columns
 for s in students:
@@ -187,7 +187,7 @@ for s in students:
     for i in range(npoll+3):
         f.write('%s,' % s[i])
     f.write('%d\n' % s[-1])
-print 'Data written to:',fname
+print('Data written to: %s' % fname)
 f.close()
 
 sys.exit()

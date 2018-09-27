@@ -37,17 +37,17 @@ content = "What chemistry topics were new to you this past week? What was "\
         "look at what your peers have answered. See something you understand "\
         "that they don't? Start a discussion! See something you are also "\
         "confused about? Tell them why!\n\n Post your response in this thread"\
-        " before Tuesday's lecture.\n\n "
+        " before Tuesday's lecture.\n\n #pin"
 
-print 'Connecting to Piazza via piazza-api...'
+print('Connecting to Piazza via piazza-api...')
 
 # Piazza setup
 p = Piazza()
 p.user_login(email=email,password=None)
 me = p.get_user_profile()
 pclass = p.network(classid)
-print '  Logged in as:', me.get('name')
-print ''
+print('  Logged in as: %s' % me.get('name'))
+print('')
 
 for i in range(nsects):
     if (groupname != ''):
@@ -73,12 +73,12 @@ for i in range(nsects):
     try:
         pclass._rpc.content_create(params)
     except piazza_api.exceptions.RequestError:
-        print 'Could not post, ignoring'
+        print('Could not post, ignoring')
         continue
     finally:
         time.sleep(5) # don't overload piazza servers
 
-    print 'Added post with title:',thistitle
+    print('Added post with title: %s' % thistitle)
 
 
 
