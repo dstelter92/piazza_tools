@@ -167,11 +167,6 @@ for post in posts:
         for keys,var in this_post.items():
             print(str(keys),'=>',str(var))
 
-    # Skip if no answers... something went wrong.
-    if (nresponse == 0):
-        print('WARNING: Poll cid=%d has no responses, skipping...' % post_cid)
-        continue
-
     # Grade based on completion
     for s in students:
         partip_score = 0
