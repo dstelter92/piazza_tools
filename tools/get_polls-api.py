@@ -87,9 +87,9 @@ for post in posts:
 
     # Skip posts that arn't polls
     post_type = str(post.get('type'))
-    post_title = str(post.get('history')[0].get('subject'))
     if post_type != 'poll':
         continue
+    post_title = str(post.get('history')[0].get('subject'))
 
     # Skip polls that arn't anonymous to students
     # public and hidden from instructors shouldn't be graded
@@ -109,7 +109,10 @@ for post in posts:
     print('--> Poll cid=%d title: %s' % (post_cid, post_title))
 
     # Skip if no answers... something went wrong.
-    votes = int(poll_data.get('total_votes'))
+    try:
+        votes = int(poll_data.get('total_votes'))
+    except:
+        votes = 0
     if (votes == 0):
         print('WARNING: Poll cid=%s has no votes, skipping...' % post_cid)
         continue
