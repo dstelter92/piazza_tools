@@ -118,7 +118,6 @@ for post in posts:
     if (duedate):
         postdate = list(map(int, postcreated[0].split('-')))
         postdate = datetime.datetime(postdate[0], postdate[1], postdate[2])
-        print(postdate)
         offset = (day - postdate.weekday() + 7) % 7
         due = postdate + datetime.timedelta(days=offset, hours=duetime[0],  minutes=duetime[1])
 
