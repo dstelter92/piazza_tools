@@ -38,7 +38,7 @@ if (duedate):
         print('Invalid Due Date: %s' % duedate)
         sys.exit()
     duedate = duedate.split('-')
-    duetime = map(int, duedate[1].split(':'))
+    duetime = list(map(int, duedate[1].split(':')))
     if (duedate[0] == 'MON'):
         day = 0
     elif (duedate[0] == 'TUE'):
@@ -116,10 +116,11 @@ for post in posts:
     # Get date of post creation, find next 'date' day
     postcreated = this_post.get('created').split('T')
     if (duedate):
-        postdate = map(int, postcreated[0].split('-'))
+        postdate = list(map(int, postcreated[0].split('-')))
         postdate = datetime.datetime(postdate[0], postdate[1], postdate[2])
+        print(postdate)
         offset = (day - postdate.weekday() + 7) % 7
-        due = postdate + datetime.timedelta(days=offset, hours=duetime[0],            minutes=duetime[1])
+        due = postdate + datetime.timedelta(days=offset, hours=duetime[0],  minutes=duetime[1])
 
 
     ## Skip posts specified in command line
@@ -148,7 +149,7 @@ for post in posts:
         if (duedate):
             # Get date for each response, round down by nearest minute
             when = response.get('when').split('T')
-            d = map(int, when[0].split('-'))
+            d = list(map(int, when[0].split('-')))
             t = when[1].split(':')
             rdate = datetime.datetime(d[0], d[1], d[2], int(t[0]), int(t[1]))
             if (rdate > due):
